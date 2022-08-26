@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flameking.mapper.PostMapper">
+   <insert id="addPost" keyProperty="id" useGeneratedKeys="true">
+       insert into post (title,descr,content,create_time,uid,type_id)
+       values (#{title},#{descr},#{content},#{create_time},#{uid},#{type_id})
+   </insert>
+    <select id="findTypeList" resultType="com.flameking.entity.Type">
+        select * from type
+    </select>
+    <select id="findAll" resultType="com.flameking.entity.PostDetai">
+        select post.*,type.name,username,avatar from type,post,user where type_id=type.id
+        and user.id=post.uid and post.status!=0 order by create_time desc
+    </select>
+    <select id="findPostById" resultType="com.flameking.entity.PostDetai">
+        select post.*,type.name,username,avatar from type,post,user
+        where type_id=type.id and user.id=post.uid  and post.id=#{id} and post.status!=0
+    </select>
+    <select id="findTypeById" resultType="com.flameking.entity.PostDetai">
+        select post.*,type.name,username,avatar from type,post,user where type.id=#{id} and type_id=type.id
+        and user.id=post.uid and post.status!=0 order by create_time desc
+    </select>
+    <update id="update">
+        update post set title=#{title},descr=#{descr},content=#{content},create_time=#{create_time},type_id=#{type_id},status=#{status} where id=#{id}
+    </update>
+    <select id="findPostByUserId" resultType="com.flameking.entity.PostDetai">
+        select * from post where uid=#{id} and post.status!=0 order by create_time desc
+    </select>
+
+    <select id="findFollowingPost" resultType="com.flameking.entity.PostDetai">
+        select post.*,type.name,username,avatar from type,post,user where type_id=type.id
+        and user.id=post.uid and post.status!=0 and uid in
+        <foreach collection="list" item="uid" index="index" open="(" close=")" separator=",">
+        #{uid}
+        </foreach>
+        order by create_time desc
+    </select>
+
+
+    <select id="serachPost" resultType="com.flameking.entity.PostDetai">
+        select post.*,type.name,username,avatar from type,post,user where
+        type_id=type.id
+        and user.id=post.uid
+        and post.status!=0
+        and title like #{content}  order by create_time desc
+    </select>
+</mapper>

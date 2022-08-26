@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flameking.mapper.UserMapper">
+    <insert id="register" >
+         INSERT INTO user (username,password,salt,avatar,email)VALUES(#{username},#{password},#{salt},#{avatar},#{email})
+    </insert>
+   <select id="exists" resultType="java.lang.Integer">
+       select count(*) from user where username=#{username}
+   </select>
+    <select id="findUserByUserName" resultType="com.flameking.entity.User">
+        select * from user where username=#{username}
+    </select>
+    <select id="findFollowerSimpleInfo" resultType="com.flameking.entity.User">
+        select id,username,avatar from user where id in
+        <foreach collection="list" item="uid" index="index" open="(" close=")" separator=",">
+            #{uid}
+        </foreach>
+    </select>
+    <select id="findUserById" resultType="com.flameking.entity.User">
+        select * from user where id=#{id}
+    </select>
+    <!--<update id="updateUserName">-->
+        <!--update user set username=#{username} where id=#{id}-->
+    <!--</update>-->
+    <!--<update id="updateSex">-->
+        <!--update user set sex=#{sex} where id=#{id}-->
+    <!--</update>-->
+    <!--<update id="updateInfo">-->
+        <!--update user set private_info=#{info} where id=#{id}-->
+    <!--</update>-->
+    <!--<update id="updateUser">-->
+        <!--update user set password=#{password},salt=#{salt} where id=#{id}-->
+    <!--</update>-->
+    <!--<update id="updateAvatar">-->
+        <!--update user set avatar=#{avatar} where id=#{id}-->
+    <!--</update>-->
+    <update id="updateUserInfo" parameterType="com.flameking.entity.User">
+       update user
+       <set>
+           <if test="username !=null">
+               username=#{username},
+           </if>
+           <if test="password !=null">
+               password=#{password},
+           </if>
+           <if test="salt !=null">
+               salt=#{salt},
+           </if>
+           <if test="email !=null">
+               email=#{email},
+           </if>
+           <if test="avatar !=null">
+               avatar=#{avatar},
+           </if>
+           <if test="private_info !=null">
+               private_info=#{private_info},
+           </if>
+           <if test="sex !=null">
+               sex=#{sex},
+           </if>
+       </set>
+        where id = #{id}
+    </update>
+    <select id="serachUser" resultType="com.flameking.entity.User">
+        select id,username,avatar from user where username like #{content}
+    </select>
+</mapper>

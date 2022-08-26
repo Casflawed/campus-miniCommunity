@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flameking.mapper.TypeMapper">
+    <select id="findTypeList" resultType="com.flameking.entity.Type">
+        select * from type
+    </select>
+    <select id="findTypeId" resultType="java.lang.Integer">
+        select id from type
+    </select>
+    <!--<select id="findTypeListNums" resultType="com.flameking.entity.Type">-->
+        <!--select type.id,name,count(*) as type_num  from post,type where type.id in(select id from type) and type.id=type_id  group by type_id  order by type_num desc;-->
+    <!--</select>-->
+
+</mapper>

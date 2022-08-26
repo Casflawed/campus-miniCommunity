@@ -1,0 +1,61 @@
+community:
+  expire: 604800
+  secret: f4e2e52034348f86b67cde581c0f9eb5
+  protocol: http
+  domain: localhost:8888
+
+
+#端口
+server:
+  port: 8888
+  servlet:
+    context-path: /retwisApi
+
+#mysql redis
+spring:
+  datasource:
+    username: root
+    password: ww2711554770
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/retwisapi?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&useSSL=false&serverTimezone=Asia/Shanghai
+  redis:
+    port: 6379
+    host: localhost
+    #使用qq邮箱发送邮件
+  mail:
+    host: smtp.qq.com           #邮箱域名
+    default-encoding: utf-8
+    username: 2711554770@qq.com     #邮箱账号
+    password: wjkqourdxaqvdcha
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 2MB
+
+#rabbitMQ
+  rabbitmq:
+    port: 5672
+    host: localhost
+    username: guest
+    password: guest
+    virtual-host: /
+
+
+#mybatis
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+
+#七牛云存储
+qiniu:
+    accessKey: PRYaCHK9ZJUa6Wq7c1YKEO728-iA79pyIH6dmb8M
+    secretKey: F75SmpG-VWdg3BfJDHvKIsibpBRw7KVOcEWKaXrB
+    bucket: casflawed
+    prefix: rghsayhq2.hn-bkt.clouddn.com
+
